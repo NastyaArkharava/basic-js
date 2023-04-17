@@ -15,9 +15,23 @@ const { NotImplementedError } = require('../extensions/index.js');
  * the output should be ["file", "file(1)", "image", "file(1)(1)", "file(2)"]
  *
  */
-function renameFiles(/* names */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function renameFiles(names) {
+  let obj = new Set();
+  let newArr = [];
+  for (let i = 0; i < names.length; i++) {
+    if (obj.has(names[i])) {
+      let j = 1;
+      while (obj.has(`${names[i]}(${j})`)) {
+        j++;
+      }
+      newArr.push(`${names[i]}(${j})`);
+      obj.add(`${names[i]}(${j})`);
+    } else {
+      obj.add(names[i]);
+      newArr.push(names[i]);
+    }
+  }
+  return newArr;
 }
 
 module.exports = {
